@@ -1,0 +1,20 @@
+﻿using Domain.Common;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Domain.Entities
+{
+    public class HomeRating : AggregateRoot
+    {
+        public Guid BookingId { get; private set; }
+
+        public Guid GuestId { get; private set; }
+
+        public Guid HomeId { get; private set; }
+
+        public string Review { get; private set; }
+
+        public StarRating StarRating { get; private set; }
+    }
+}
