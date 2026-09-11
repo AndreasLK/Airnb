@@ -13,5 +13,11 @@ namespace Domain.Entities
         public string AuthenticationJWT { get; private set; }
 
         public string Password { get; private set; }
+
+        public User(string authenticationJWT, string password)
+        {
+            AuthenticationJWT = authenticationJWT;
+            Password = password;
+        }
     }
 }
