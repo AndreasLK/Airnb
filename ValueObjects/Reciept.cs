@@ -10,10 +10,15 @@ namespace Domain.ValueObjects
         public Money StartPrice { get; private set; }
         public string Service {  get; private set; } //vi har diskuteret til vores røvhuller blødte
 
-        public Reciept() { }
-        public Reciept(Money money,  string service)    
+        public Reciept()
         {
-            money = money;
+            StartPrice = null!;
+            Service = null!;
+        }
+        public Reciept(Money money, string service)
+        {
+            StartPrice = money;
             Service = service;
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Domain.ValueObjects
         {
             Start = start;
             End = end;
-            ValidateOverlapping();
+            //ValidateOverlapping();
             ValidateNotInPast();
         }
 
