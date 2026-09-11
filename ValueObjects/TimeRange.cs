@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Domain.Exceptions;
 
 namespace Domain.ValueObjects
 {
@@ -11,17 +13,22 @@ namespace Domain.ValueObjects
 
         public TimeRange(DateTime start, DateTime end)
         {
-            start = Start;
-            end = End;
+            Start = start;
+            End = end;
+            ValidateOverlapping();
+            ValidateNotInPast();
         }
 
-        public void ValidationForOverLapping(DateTime start, DateTime end)
+        public bool OverlapsWith(TimeRange other)
         {
-            if (start > end)
+            return Start < other.End && End > other.Start;
+        }
+        public void ValidateNotInPast()
+        {
+            if (Start < DateTime.Now)
             {
-                throw new DomainException("lad lige vær med det en gang din numse prut!");
+                throw new DomainException("Du kan ikke booke i fortiden!");
             }
-            start = Start;
         }
     }
 }

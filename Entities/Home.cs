@@ -44,7 +44,16 @@ namespace Domain.Entities
             List<DateOnly> dateOnlies,
             HomeFeatures homeFeatures)
         {
-
+            HostId = hostId;
+            Capacity = capacity;
+            Address = address;
+            CheckInTime = checkInTime;
+            CheckOutTime = checkOutTime;
+            HomeType = homeType;
+            PricePerDay = pricePerDay;
+            HomeRulesId = homeRulesId;
+            AvailableDates = dateOnlies;
+            HomeFeatures = homeFeatures;
         }
     }
 }
