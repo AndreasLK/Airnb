@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="../API/API.csproj" Id="0812c22d-62bc-4816-879b-4844905af686" />
   <Project Path="../Persistance/Persistance.csproj" Id="cfd57a6b-64bb-4eb8-a7f1-8f9168ea51fb" />
+  <Project Path="API/API.csproj" />
   <Project Path="Domain.csproj" />
   <Project Path="Shared/Shared.csproj" Id="f918fd9a-8ca0-4446-9d48-37966020e655" />
 </Solution>
