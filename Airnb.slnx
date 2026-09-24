@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="API/API.csproj" />
-  <Project Path="Domain.csproj" />
-  <Project Path="Persistance/Persistance.csproj" />
-  <Project Path="Shared/Shared.csproj" Id="f918fd9a-8ca0-4446-9d48-37966020e655" />
+  <Project Path="Airnb.Application/Airnb.Application.csproj" Id="b051515f-afc2-4fab-8e56-0cb272a358a8" />
+  <Project Path="Airnb.Domain/Airnb.Domain.csproj" Id="bdc6707d-4dfe-4ba1-bc7d-8ff2713f6513" />
+  <Project Path="Airnb.Infrastructure/Airnb.Infrastructure.csproj" Id="b52fd515-6a52-43d7-b119-2fba111fd4ed" />
+  <Project Path="Airnb.Shared/Airnb.Shared.csproj" Id="05faaed3-ed5f-4505-96ff-4a08d04aef9f" />
 </Solution>

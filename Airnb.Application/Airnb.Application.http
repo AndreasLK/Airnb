@@ -1,0 +1,6 @@
+@Airnb.Application_HostAddress = http://localhost:5262
+
+GET {{Airnb.Application_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
