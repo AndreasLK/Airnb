@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Airnb.Domain.Entities;
-using Airnb.Application.Interfaces;
+using Airnb.Application.Repository.Interfaces;
 using Airnb.Infrastructure.DataAccessLayer.DbContexts;
 
-namespace Airnb.Infrastructure.Repositories
+namespace Airnb.Infrastructure.Repositories.Bookings
 {
     public class BookingRepository : IBookingRepository
     {
@@ -17,13 +17,6 @@ namespace Airnb.Infrastructure.Repositories
             return await _context.Bookings
                 .Where(b => b.Id == id)
                 .FirstOrDefaultAsync(cancellationToken);
-        }
-
-        public async Task<IReadOnlyList<Booking>> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            return await _context.Bookings
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
         }
 
         public async Task AddAsync(Booking booking, CancellationToken cancellationToken = default)

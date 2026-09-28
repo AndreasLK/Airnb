@@ -6,7 +6,8 @@ using System.Text;
 
 namespace Airnb.Infrastructure.DataAccessLayer.DbContexts
 {
-    public class AirnbDbContext : DbContext
+    public class AirnbDbContext : DbContext //det vigtigeste denne klasse skal gøre er at tildele nogle tabels til de forskellige entiteter,
+                                            //som vi har i vores domæne. Det gør vi ved at definere DbSet properties for hver entitet.
     {
         public AirnbDbContext(DbContextOptions<AirnbDbContext> options)
             : base(options)
@@ -24,9 +25,12 @@ namespace Airnb.Infrastructure.DataAccessLayer.DbContexts
         
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder) //til konventioner og regler for hvordan entiteterne skal mappes til databasen.
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AirnbDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AirnbDbContext).Assembly); //Dette vil automatisk registrere alle konfigurationer,
+                                                                                           //der er defineret i separate konfigurationsklasser,
+                                                                                           //som implementerer IEntityTypeConfiguration<T> interfacet.
+                                                                                           //- kig i mappen Configurations for at se hvordan det er gjort.
         }
     }
 }

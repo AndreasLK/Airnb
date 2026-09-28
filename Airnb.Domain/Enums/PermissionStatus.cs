@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Airnb.Domain.Enums
 {
-    public class PermissionStatus
+    public enum PermissionStatus
     {
+        Pending,
+        Approved,
+        Denied
     }
 }

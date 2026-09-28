@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Airnb.Domain.Common;
 using Airnb.Domain.Enums;
+using Airnb.Domain.Exceptions;
 using Airnb.Domain.ValueObjects;
 
 namespace Airnb.Domain.Entities
@@ -55,15 +56,15 @@ namespace Airnb.Domain.Entities
         public void Validate()
         {
             if (GuestId == Guid.Empty)
-                throw new ArgumentException("GuestId cannot be empty.");
+                throw new DomainException("GuestId cannot be empty.");
             if (HomeId == Guid.Empty)
-                throw new ArgumentException("HomeId cannot be empty.");
+                throw new DomainException("HomeId cannot be empty.");
             if (NumberOfGuests <= 0)
-                throw new ArgumentException("NumberOfGuests must be greater than zero.");
+                throw new DomainException("NumberOfGuests must be greater than zero.");
             if (Price < 0)
-                throw new ArgumentException("Price cannot be negative.");
+                throw new DomainException("Price cannot be negative.");
             if (Reciept == null)
-                throw new ArgumentException("Reciept cannot be null.");
+                throw new DomainException("Reciept cannot be null.");
         }
 
         public void UpdateDetails(BookingStatus status, TimeRange timeRange, int numberOfGuests, double price, Reciept reciept)
@@ -73,6 +74,13 @@ namespace Airnb.Domain.Entities
             NumberOfGuests = numberOfGuests;
             Price = price;
             Reciept = reciept;
+            Validate();
+        }
+
+        public void Update(DateTime start, DateTime end, BookingStatus status)
+        {
+            TimeRange = new TimeRange(start, end);
+            Status = status;
             Validate();
         }
     }

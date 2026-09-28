@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Airnb.Shared.BookingDTO
+namespace Airnb.Shared.Bookings.DTO
 {
     public record BookingDto(
     Guid Id, 
