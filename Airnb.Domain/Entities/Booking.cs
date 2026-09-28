@@ -16,7 +16,6 @@ namespace Airnb.Domain.Entities
         public TimeRange TimeRange { get; private set; }
         public DateTime CreatedTime { get; private set; }
         public int NumberOfGuests { get; private set; }
-        public double Price { get; private set; }
         public Reciept Reciept { get; private set; }
 
         private Booking() { } // EF Core needs this
@@ -27,7 +26,6 @@ namespace Airnb.Domain.Entities
             TimeRange timeRange,
             DateTime createdTime,
             int numberOfGuests,
-            double price,
             Reciept reciept)
         {
             this.GuestId = guestId;
@@ -36,9 +34,9 @@ namespace Airnb.Domain.Entities
             this.TimeRange = timeRange;
             this.CreatedTime = createdTime;
             this.NumberOfGuests = numberOfGuests;
-            this.Price = price;
             this.Reciept = reciept;
             this.Validate();
+            
         }
 
         public static Booking Create(Guid guestId,
@@ -47,12 +45,13 @@ namespace Airnb.Domain.Entities
             TimeRange timeRange,
             DateTime createdTime,
             int numberOfGuests,
-            double price,
-            Reciept reciept)
+            Reciept reciept
+            )
         {
-            return new Booking(guestId, homeId, status, timeRange, createdTime, numberOfGuests, price, reciept);
+            timeRange.ValidateNotInPast();
+            return new Booking(guestId, homeId, status, timeRange, createdTime, numberOfGuests, reciept);
         }
-
+        
         public void Validate()
         {
             if (GuestId == Guid.Empty)
@@ -61,27 +60,24 @@ namespace Airnb.Domain.Entities
                 throw new DomainException("HomeId cannot be empty.");
             if (NumberOfGuests <= 0)
                 throw new DomainException("NumberOfGuests must be greater than zero.");
-            if (Price < 0)
-                throw new DomainException("Price cannot be negative.");
             if (Reciept == null)
                 throw new DomainException("Reciept cannot be null.");
+            if (Reciept.StartPrice.Amount < 0)
+                throw new DomainException("Price cannot be negative.");
         }
 
-        public void UpdateDetails(BookingStatus status, TimeRange timeRange, int numberOfGuests, double price, Reciept reciept)
+        public void UpdateDetails(BookingStatus status, TimeRange timeRange, int numberOfGuests, Reciept reciept)
         {
+            if (timeRange != TimeRange)
+                timeRange.ValidateNotInPast();
+
             Status = status;
             TimeRange = timeRange;
             NumberOfGuests = numberOfGuests;
-            Price = price;
             Reciept = reciept;
             Validate();
         }
 
-        public void Update(DateTime start, DateTime end, BookingStatus status)
-        {
-            TimeRange = new TimeRange(start, end);
-            Status = status;
-            Validate();
-        }
+       
     }
 }

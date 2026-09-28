@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Airnb.Domain.Exceptions;
 
 namespace Airnb.Domain.ValueObjects
 {
@@ -18,6 +16,17 @@ namespace Airnb.Domain.ValueObjects
         {
             StartPrice = money;
             Service = service;
+        }
+
+        public static Reciept Create(Money pricePerDay, TimeRange timeRange, string service)
+        {
+            var nights = (timeRange.End.Date - timeRange.Start.Date).Days;
+
+            if (nights < 1)
+                throw new DomainException("En booking skal være mindst én nat.");
+
+            var price = new Money(pricePerDay.Amount * nights, pricePerDay.Currency);
+            return new Reciept(price, service);
         }
     }
 }

@@ -40,9 +40,6 @@ namespace Airnb.Infrastructure.Migrations
                     b.Property<int>("NumberOfGuests")
                         .HasColumnType("int");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -84,9 +81,6 @@ namespace Airnb.Infrastructure.Migrations
 
                     b.Property<DateTime>("CheckOutTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("HomeRulesId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("HomeType")
                         .IsRequired()
@@ -271,7 +265,6 @@ namespace Airnb.Infrastructure.Migrations
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Floor")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("HouseNumber")
@@ -314,7 +307,6 @@ namespace Airnb.Infrastructure.Migrations
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Floor")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("HouseNumber")
@@ -385,10 +377,34 @@ namespace Airnb.Infrastructure.Migrations
                                 .HasForeignKey("HomeId");
                         });
 
+                    b.OwnsOne("Airnb.Domain.ValueObjects.HomeRules", "HomeRules", b1 =>
+                        {
+                            b1.Property<Guid>("HomeId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool>("PartiesAllowed")
+                                .HasColumnType("bit");
+
+                            b1.Property<bool>("PetsAllowed")
+                                .HasColumnType("bit");
+
+                            b1.Property<bool>("SmokingAllowed")
+                                .HasColumnType("bit");
+
+                            b1.HasKey("HomeId");
+
+                            b1.ToTable("Homes");
+
+                            b1.WithOwner()
+                                .HasForeignKey("HomeId");
+                        });
+
                     b.Navigation("Address")
                         .IsRequired();
 
-                    b.Navigation("HomeFeatures")
+                    b.Navigation("HomeFeatures");
+
+                    b.Navigation("HomeRules")
                         .IsRequired();
 
                     b.Navigation("PricePerDay")

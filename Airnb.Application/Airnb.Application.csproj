@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Airnb.Shared\Airnb.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Usecases\Homes\UpdateHome\" />
-  </ItemGroup>
-
 </Project>

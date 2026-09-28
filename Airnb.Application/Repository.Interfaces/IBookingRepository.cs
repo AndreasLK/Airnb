@@ -9,6 +9,7 @@ namespace Airnb.Application.Repository.Interfaces
     public interface IBookingRepository
     {
         Task<Booking?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<List<Booking>> GetByHomeIdAsync(Guid homeId, CancellationToken cancellationToken = default);
         Task AddAsync(Booking booking, CancellationToken cancellationToken = default);
         void Update(Booking booking);
         void Delete(Booking booking);

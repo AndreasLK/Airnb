@@ -100,6 +100,16 @@ namespace Airnb.Domain.Entities
                 if (HomeRules is null)
                     throw new DomainException("HomeRules cannot be null.");
             }
+
+        public Money CalculatePrice(TimeRange timeRange)
+        {
+            var nights = (timeRange.End.Date - timeRange.Start.Date).Days;
+
+            if (nights < 1)
+                throw new DomainException("En booking skal være mindst én nat.");
+
+            return new Money(PricePerDay.Amount * nights, PricePerDay.Currency);
         }
+    }
     }
 

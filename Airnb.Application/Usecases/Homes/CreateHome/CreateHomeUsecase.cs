@@ -2,7 +2,8 @@
 using Airnb.Domain.Entities;
 using Airnb.Domain.Enums;
 using Airnb.Domain.ValueObjects;
-using Airnb.Shared.Homes;
+using Airnb.Shared.Homes.DTO;
+using Airnb.Shared.Homes.Requests;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -39,8 +40,7 @@ namespace Airnb.Application.Usecases.Homes.CreateHome
                 new HomeRules(
                 request.PetsAllowed,
                 request.SmokingAllowed,
-                request.PartiesAllowed,
-                request.Capacity));
+                request.PartiesAllowed));
 
             await _homeRepository.AddAsync(home, cancellationToken);
             await _homeRepository.SaveChangesAsync(cancellationToken);

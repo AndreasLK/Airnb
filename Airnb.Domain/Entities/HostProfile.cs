@@ -15,8 +15,8 @@ namespace Airnb.Domain.Entities
 
         public HostProfile(Guid userId, Guid permissionsId)
         {
-            userId = UserId;
-            permissionsId = PermissionsId;
+            UserId = userId;
+            PermissionsId = permissionsId;
         }
 
     }

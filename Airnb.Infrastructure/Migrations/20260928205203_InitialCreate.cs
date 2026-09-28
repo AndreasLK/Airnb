@@ -23,7 +23,6 @@ namespace Airnb.Infrastructure.Migrations
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NumberOfGuests = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
                     PriceAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PriceCurrency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     Service = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
@@ -44,7 +43,7 @@ namespace Airnb.Infrastructure.Migrations
                     Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_StreetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_Floor = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Address_Floor = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,18 +78,20 @@ namespace Airnb.Infrastructure.Migrations
                     Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_StreetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address_Floor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Floor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CheckInTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CheckOutTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HomeType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PriceAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PriceCurrency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
-                    HomeRulesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HomeRules_PetsAllowed = table.Column<bool>(type: "bit", nullable: false),
+                    HomeRules_SmokingAllowed = table.Column<bool>(type: "bit", nullable: false),
+                    HomeRules_PartiesAllowed = table.Column<bool>(type: "bit", nullable: false),
                     AvailableDates = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HomeFeatures_SwimmingPool = table.Column<bool>(type: "bit", nullable: false),
-                    HomeFeatures_HotTub = table.Column<bool>(type: "bit", nullable: false),
-                    HomeFeatures_DryingCloset = table.Column<bool>(type: "bit", nullable: false),
-                    HomeFeatures_Sauna = table.Column<bool>(type: "bit", nullable: false)
+                    HomeFeatures_SwimmingPool = table.Column<bool>(type: "bit", nullable: true),
+                    HomeFeatures_HotTub = table.Column<bool>(type: "bit", nullable: true),
+                    HomeFeatures_DryingCloset = table.Column<bool>(type: "bit", nullable: true),
+                    HomeFeatures_Sauna = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {

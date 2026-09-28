@@ -1,7 +1,7 @@
 ﻿using Airnb.Domain.Entities;
-using Airnb.Shared.Homes;
 using Microsoft.EntityFrameworkCore;
 using Airnb.Infrastructure.DataAccessLayer.DbContexts;
+using Airnb.Shared.Homes.DTO;
 
 namespace Airnb.Infrastructure.Queries.Homes
 {
@@ -27,6 +27,22 @@ namespace Airnb.Infrastructure.Queries.Homes
                     h.PricePerDay.Amount,
                     h.PricePerDay.Currency))
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<HomeDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Homes
+                .AsNoTracking()
+                .Where(h => h.Id == id)
+                .Select(h => new HomeDto(
+                    h.Id,
+                    h.HostId,
+                    h.Capacity,
+                    h.Address.City,
+                    h.HomeType.ToString(),
+                    h.PricePerDay.Amount,
+                    h.PricePerDay.Currency))
+                .FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

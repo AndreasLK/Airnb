@@ -1,4 +1,5 @@
-﻿using Airnb.Shared.Homes;
+﻿using Airnb.Shared.Homes.DTO;
+using Airnb.Shared.Homes.Requests;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Airnb.Shared.Homes
+namespace Airnb.Shared.Homes.Requests
 {
     public record CreateHomeRequest(
     Guid HostId,

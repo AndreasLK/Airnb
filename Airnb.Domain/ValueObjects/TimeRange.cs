@@ -10,24 +10,31 @@ namespace Airnb.Domain.ValueObjects
         public DateTime Start { get; private set; }
         public DateTime End { get; private set; }
 
+        private TimeRange() { }
         public TimeRange(DateTime start, DateTime end)
         {
             Start = start;
             End = end;
-            //ValidateOverlapping();
-            ValidateNotInPast();
+          
+            ValidateEndAfterStart();
         }
 
         public bool OverlapsWith(TimeRange other)
         {
             return Start < other.End && End > other.Start;
         }
-        public void ValidateNotInPast()
+        private void ValidateEndAfterStart()
         {
-            if (Start < DateTime.Now)
+            if (End <= Start)
             {
-                throw new DomainException("Du kan ikke booke i fortiden!");
+                throw new DomainException("Slutdatoen skal ligge efter startdatoen.");
             }
         }
+        public void ValidateNotInPast()
+        {
+            if (Start < DateTime.UtcNow)
+                throw new DomainException("Starttiden kan ikke være i fortiden.");
+        }
+        
     }
 }

@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Airnb.Application.Repository.Interfaces;
 using Airnb.Domain.Entities;
-using Airnb.Application.Repository.Interfaces;
+using Airnb.Domain.Enums;
 using Airnb.Infrastructure.DataAccessLayer.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Airnb.Infrastructure.Repositories.Bookings
 {
@@ -46,6 +47,15 @@ namespace Airnb.Infrastructure.Repositories.Bookings
         public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await _context.SaveChangesAsync(cancellationToken) > 0;
+        }
+
+        public async Task<List<Booking>> GetByHomeIdAsync(Guid homeId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Bookings
+                .Where(b => b.HomeId == homeId
+                 && b.Status != BookingStatus.Cancelled
+                 && b.Status != BookingStatus.CheckedOut)
+                .ToListAsync(cancellationToken);
         }
     }
 }

@@ -3,8 +3,8 @@ using Airnb.Application.Usecases.Bookings.DeleteBooking;
 using Airnb.Application.Usecases.Bookings.UpdateBooking;
 using Airnb.Infrastructure.Queries.Bookings;
 using Airnb.Shared.Bookings.DTO;
-using Airnb.Shared.Bookings.Request.Bookings;
-using Microsoft.AspNetCore.Http;
+using Airnb.Shared.Bookings.Requests.Bookings;
+using Airnb.Shared.Homes.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airnb.API.Controllers
@@ -52,24 +52,14 @@ namespace Airnb.API.Controllers
         [EndpointSummary("Opretter en ny booking")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BookingDto>> Create(CreateBookingRequest request, CancellationToken ct)
         {
-            try
-            {
-                var booking = await _create.ExecuteAsync(request, ct); //her sætter vi gang i oprettelsen af en booking ved at kalde ExecuteAsync metoden på _create objektet,
-                                                                       //som er en instans af ICreateBookingUsecase interfacet.
+
+                var booking = await _create.ExecuteAsync(request, ct); //her sætter vi gang i oprettelsen af en booking ved at kalde ExecuteAsync metoden på _create objektet,                                                    //som er en instans af ICreateBookingUsecase interfacet.
                                                                        //Vi sender request objektet og CancellationToken ct som parametre til metoden.
                 return CreatedAtAction(nameof(GetById), new { id = booking.Id }, booking); //her returnerer vi en CreatedAtAction respons, som angiver, at en ny booking er blevet oprettet.
-                                                                                           //Vi bruger nameof(GetById) for at angive navnet på den metode, der kan bruges til at hente den oprettede booking.
-                                                                                           //Vi sender også et anonymt objekt med id'et på den oprettede booking og selve booking objektet som responsindhold.
-            }
-            catch (ArgumentException ex)
-            {
-                return Problem(
-                    title: "Ugyldig booking",
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status400BadRequest);
-            }
+
         }
 
         [HttpPut("{id:guid}")]
@@ -79,19 +69,8 @@ namespace Airnb.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update(Guid id, UpdateBookingRequest request, CancellationToken ct)
         {
-            try
-            {
                 await _update.ExecuteAsync(id, request, ct);
                 return NoContent();
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         [HttpDelete("{id:guid}")]
@@ -100,15 +79,8 @@ namespace Airnb.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]  //Dette er en anden ProducesResponseType attribut, der angiver, at endpointet kan returnere 404 Not Found, hvis bookingen ikke findes.
         public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         {
-            try
-            {
                 await _delete.ExecuteAsync(id, ct);
                 return NoContent();
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
         }
     }
 }

@@ -15,8 +15,8 @@ namespace Airnb.Domain.Entities
         public Permission() { }
         public Permission(Guid userId, PermissionStatus permissionStatus)
         {
-            userId = UserId;
-            permissionStatus = PermissionStatus;
+            UserId = userId;
+            PermissionStatus = permissionStatus;
         }
     }
 }

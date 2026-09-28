@@ -12,6 +12,7 @@ namespace Airnb.Infrastructure.DataAccessLayer.Configuration
 
             builder.OwnsOne(h => h.Address);
             builder.OwnsOne(h => h.HomeFeatures);
+            builder.OwnsOne(h => h.HomeRules);
 
             builder.OwnsOne(h => h.PricePerDay, m =>
             {

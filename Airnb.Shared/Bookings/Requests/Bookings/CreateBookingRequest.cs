@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Airnb.Shared.Bookings.Request.Bookings
+namespace Airnb.Shared.Bookings.Requests.Bookings
 {
     public record CreateBookingRequest(
        Guid GuestId,
@@ -10,7 +10,5 @@ namespace Airnb.Shared.Bookings.Request.Bookings
        DateTime Start,
        DateTime End,
        int NumberOfGuests,
-       decimal Amount,
-       string Currency,
        string Service);
 }

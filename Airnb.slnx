@@ -3,5 +3,6 @@
   <Project Path="Airnb.Application/Airnb.Application.csproj" Id="29028c63-e099-4682-97a1-413aa8f04bf2" />
   <Project Path="Airnb.Domain/Airnb.Domain.csproj" Id="bdc6707d-4dfe-4ba1-bc7d-8ff2713f6513" />
   <Project Path="Airnb.Infrastructure/Airnb.Infrastructure.csproj" Id="b52fd515-6a52-43d7-b119-2fba111fd4ed" />
+  <Project Path="Airnb.Presentation/Airnb.Presentation.csproj" Id="88630f93-1ac1-4fdd-a9ae-925374a22b5e" />
   <Project Path="Airnb.Shared/Airnb.Shared.csproj" Id="05faaed3-ed5f-4505-96ff-4a08d04aef9f" />
 </Solution>
