@@ -3,8 +3,7 @@ using Airnb.Application.Usecases.Bookings.DeleteBooking;
 using Airnb.Application.Usecases.Bookings.UpdateBooking;
 using Airnb.Infrastructure.Queries.Bookings;
 using Airnb.Shared.Bookings.DTO;
-using Airnb.Shared.Bookings.Requests.Bookings;
-using Airnb.Shared.Homes.DTO;
+using Airnb.Shared.Bookings.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airnb.API.Controllers

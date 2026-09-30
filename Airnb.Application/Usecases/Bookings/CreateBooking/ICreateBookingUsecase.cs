@@ -1,5 +1,5 @@
 ﻿using Airnb.Shared.Bookings.DTO;
-using Airnb.Shared.Bookings.Requests.Bookings;
+using Airnb.Shared.Bookings.Requests;
 using System;
 using System.Collections.Generic;
 using System.Text;

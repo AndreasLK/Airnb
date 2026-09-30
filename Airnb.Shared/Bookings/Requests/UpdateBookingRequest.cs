@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Airnb.Shared.Bookings.Requests.Bookings
+namespace Airnb.Shared.Bookings.Requests
 {
     public record UpdateBookingRequest(
         string Status,

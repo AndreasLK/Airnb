@@ -4,7 +4,7 @@ using Airnb.Domain.Entities;
 using Airnb.Domain.Enums;
 using Airnb.Domain.ValueObjects;
 using Airnb.Shared.Bookings.DTO;
-using Airnb.Shared.Bookings.Requests.Bookings;
+using Airnb.Shared.Bookings.Requests;
 
 namespace Airnb.Application.Usecases.Bookings.CreateBooking
 {
