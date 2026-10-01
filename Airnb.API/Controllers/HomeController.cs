@@ -63,9 +63,9 @@ namespace Airnb.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(Guid id, UpdateHomeRequest request, CancellationToken ct)
+        public async Task<IActionResult> Update(Guid id, Guid hostId, UpdateHomeRequest request, CancellationToken ct)
         {
-            await _update.ExecuteAsync(id, request, ct);
+            await _update.ExecuteAsync(id, hostId, request, ct);
             return NoContent();
         }
 
@@ -74,9 +74,9 @@ namespace Airnb.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]   // huset har aktive bookinger
-        public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
+        public async Task<IActionResult> Delete(Guid id, Guid hostId, CancellationToken ct)
         {
-            await _delete.ExecuteAsync(id, ct);
+            await _delete.ExecuteAsync(id, hostId, ct);
             return NoContent();
         }
     }

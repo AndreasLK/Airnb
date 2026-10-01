@@ -10,6 +10,7 @@ namespace Airnb.Infrastructure.Queries.Bookings
     {
         Task<IReadOnlyList<BookingDto>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<BookingDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<IReadOnlyList<BookingDto>> GetByHomeIdAsync(Guid homeId, CancellationToken cancellationToken = default);
 
     }
 }

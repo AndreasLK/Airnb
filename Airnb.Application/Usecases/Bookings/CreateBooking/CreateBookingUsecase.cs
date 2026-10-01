@@ -27,7 +27,7 @@ namespace Airnb.Application.Usecases.Bookings.CreateBooking
             var home = await _homeRepository.GetByIdAsync(request.HomeId, cancellationToken)
             ?? throw new KeyNotFoundException($"Hus med ID {request.HomeId} blev ikke fundet.");
 
-            var existingBookings = await _bookingRepository.GetByHomeIdAsync(request.HomeId, cancellationToken);
+            var existingBookings = await _bookingRepository.GetByHomeIdAsync(request.HomeId, cancellationToken); //tjekker for eksisterende bookinger for det givne hjem, så vi kan tjekke for overlap.
 
             var timeRange = new TimeRange(request.Start, request.End);
             _conflictChecker.ValidateWithoutOverlapping(timeRange, request.NumberOfGuests, home, existingBookings);

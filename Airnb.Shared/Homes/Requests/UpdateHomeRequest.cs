@@ -5,6 +5,7 @@ using System.Text;
 namespace Airnb.Shared.Homes.Requests
 {
     public record UpdateHomeRequest(
+     Guid HostId,
      int Capacity,
      string Country,
      string PostalCode,

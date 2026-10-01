@@ -2,9 +2,13 @@
 using Airnb.Domain.DomainServices;
 using Airnb.Infrastructure.DataAccessLayer.DbContexts;
 using Airnb.Infrastructure.Queries.Bookings;
+using Airnb.Infrastructure.Queries.Guests;
 using Airnb.Infrastructure.Queries.Homes;
 using Airnb.Infrastructure.Repositories.Bookings;
+using Airnb.Infrastructure.Repositories.Guests;
 using Airnb.Infrastructure.Repositories.Homes;
+using Airnb.Infrastructure.Repositories.Host;
+using Airnb.Infrastructure.Repositories.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +28,13 @@ namespace Airnb.Infrastructure.DependencyInjection
 
             services.AddScoped<IHomeQueries, HomeQueries>();
             services.AddScoped<IHomeRepository, HomeRepository>();
+
+            services.AddScoped<IGuestRepository, GuestRepository>();
+            services.AddScoped<IGuestQueries, GuestQueries>();
+
+            services.AddScoped<IHostRepository, HostRepository>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

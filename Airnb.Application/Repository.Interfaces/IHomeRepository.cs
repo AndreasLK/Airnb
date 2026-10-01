@@ -12,6 +12,7 @@ namespace Airnb.Application.Repository.Interfaces
         void Update(Home home);
         void Delete(Home home);
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
+        
 
     }
 }

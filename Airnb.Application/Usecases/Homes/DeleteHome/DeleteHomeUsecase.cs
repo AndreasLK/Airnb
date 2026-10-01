@@ -14,14 +14,16 @@ namespace Airnb.Application.Usecases.Homes.DeleteHome
             _bookingRepository = bookingRepository;
         }
 
-        public async Task ExecuteAsync(Guid homeId, CancellationToken cancellationToken = default)
+        public async Task ExecuteAsync(Guid homeId, Guid hostId, CancellationToken cancellationToken = default)
         {
             var home = await _homeRepository.GetByIdAsync(homeId, cancellationToken)
                 ?? throw new KeyNotFoundException($"Hus med ID {homeId} blev ikke fundet.");
 
-            var activeBookings = await _bookingRepository.GetByHomeIdAsync(homeId, cancellationToken);
-            if (activeBookings.Any())
-                throw new DomainException("Huset kan ikke slettes, da det har aktive bookinger.");
+            if (home.HostId != hostId)
+                throw new UnauthorizedAccessException("Du kan kun slette dine egne boliger.");  //sørger for at kun værten kan slette deres egne boliger
+
+            if (await _bookingRepository.ExistsForHomeAsync(homeId, cancellationToken))
+                throw new InvalidOperationException("Huset kan ikke slettes, da det har bookinger.");  //sørger for at boligen ikke kan slettes hvis der er bookinger på den
 
             _homeRepository.Delete(home);
             await _homeRepository.SaveChangesAsync(cancellationToken);

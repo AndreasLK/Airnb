@@ -20,6 +20,7 @@ namespace Airnb.Application.Usecases.Homes.CreateHome
         }
         public async Task<HomeDto> ExecuteAsync(CreateHomeRequest request, CancellationToken cancellationToken = default)
         {
+            
             if (!Enum.TryParse<HomeType>(request.HomeType, ignoreCase: true, out var homeType))
                 throw new ArgumentException($"Ugyldig boligtype: {request.HomeType}");
 

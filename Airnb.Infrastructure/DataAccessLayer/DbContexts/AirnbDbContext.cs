@@ -19,7 +19,6 @@ namespace Airnb.Infrastructure.DataAccessLayer.DbContexts
         public DbSet<Home> Homes => Set<Home>();
         public DbSet<HomeRating> HomeRatings => Set<HomeRating>();
         public DbSet<HostProfile> Hosts => Set<HostProfile>();
-        public DbSet<Permission> Permissions => Set<Permission>();
         public DbSet<User> Users => Set<User>();
        
         

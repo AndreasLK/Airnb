@@ -44,9 +44,9 @@ namespace Airnb.Infrastructure.Repositories.Bookings
                 .AnyAsync(b => b.Id == id, cancellationToken);
         }
 
-        public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            return await _context.SaveChangesAsync(cancellationToken) > 0;
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<List<Booking>> GetByHomeIdAsync(Guid homeId, CancellationToken cancellationToken = default)
@@ -56,6 +56,22 @@ namespace Airnb.Infrastructure.Repositories.Bookings
                  && b.Status != BookingStatus.Cancelled
                  && b.Status != BookingStatus.CheckedOut)
                 .ToListAsync(cancellationToken);
+        }
+        public async Task<bool> ExistsForHomeAsync(Guid homeId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Bookings.AnyAsync(b => b.HomeId == homeId, cancellationToken);
+        }
+
+        public async Task<bool> HasUpcomingForHostAsync(Guid hostId, CancellationToken cancellationToken = default)
+        {
+            var now = DateTime.UtcNow;
+            var blockingStatuses = new[] { BookingStatus.Pending, BookingStatus.Confirmed, BookingStatus.CheckedIn };
+
+            return await _context.Bookings.AnyAsync(b =>
+                blockingStatuses.Contains(b.Status)
+                && b.TimeRange.End > now
+                && _context.Homes.Any(h => h.Id == b.HomeId && h.HostId == hostId),
+                cancellationToken);
         }
     }
 }

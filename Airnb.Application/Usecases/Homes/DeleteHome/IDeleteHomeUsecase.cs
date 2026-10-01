@@ -6,6 +6,6 @@ namespace Airnb.Application.Usecases.Homes.DeleteHome
 {
     public interface IDeleteHomeUsecase
     {
-        Task ExecuteAsync(Guid homeId, CancellationToken cancellationToken = default);
+        Task ExecuteAsync(Guid homeId, Guid hostId, CancellationToken cancellationToken = default);
     }
 }

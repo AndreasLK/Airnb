@@ -15,5 +15,11 @@ namespace Airnb.Domain.Entities
             AuthenticationJWT = authenticationJWT;
             Password = password;
         }
+        
+        public static User Create(string authenticationJWT, string password)
+        {
+            return new User(authenticationJWT, password);
+        }
+
     }
 }

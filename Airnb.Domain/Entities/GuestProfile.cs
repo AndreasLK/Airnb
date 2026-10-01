@@ -5,7 +5,7 @@ namespace Airnb.Domain.Entities
 {
     public class GuestProfile : AggregateRoot
     {
-        public GuestProfile() { }
+        private GuestProfile() { }
 
         public Guid UserId { get; private set; }
 
@@ -15,6 +15,14 @@ namespace Airnb.Domain.Entities
         {
             UserId = userId;
             Address = address;
+        }
+        public static GuestProfile Create(Guid userId, Address address)
+        {
+            return new GuestProfile(userId, address);
+        }
+        public void UpdateAddress(Address address)
+        {
+            Address = address ?? throw new ArgumentNullException(nameof(address));
         }
 
     }

@@ -47,5 +47,22 @@ namespace Airnb.Infrastructure.Queries.Bookings
                     b.Reciept.StartPrice.Currency))
                 .FirstOrDefaultAsync(cancellationToken);
         }
+
+        public async Task<IReadOnlyList<BookingDto>> GetByHomeIdAsync(Guid homeId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Bookings
+                .Where(b => b.HomeId == homeId)
+                .Select(b => new BookingDto(
+                    b.Id,
+                    b.GuestId,
+                    b.HomeId,
+                    b.Status.ToString(),
+                    b.TimeRange.Start,
+                    b.TimeRange.End,
+                    b.NumberOfGuests,
+                    b.Reciept.StartPrice.Amount,
+                    b.Reciept.StartPrice.Currency))
+                .ToListAsync(cancellationToken);
+        }
     }
 }

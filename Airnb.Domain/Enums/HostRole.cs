@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Airnb.Domain.Enums
 {
-    public enum PermissionStatus
+    public enum HostRole
     {
         Admin,
         CoWorker,

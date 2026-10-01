@@ -15,17 +15,23 @@ namespace Airnb.Application.Usecases.Homes.UpdateHome
             _homeRepository = homeRepository;
         }
 
-        public async Task ExecuteAsync(Guid homeId, UpdateHomeRequest request, CancellationToken cancellationToken = default)
+        public async Task ExecuteAsync(Guid homeId, Guid hostId, UpdateHomeRequest request, CancellationToken cancellationToken = default)
         {
             // 1. Find huset – findes det ikke, bliver det til 404 via GlobalExceptionHandler
             var home = await _homeRepository.GetByIdAsync(homeId, cancellationToken)
                 ?? throw new KeyNotFoundException($"Hus med ID {homeId} blev ikke fundet.");
 
-            // 2. Oversæt tekst til enum – samme som i CreateHomeUsecase
+            //2. Tjek at det er den rigtige host, der prøver at ændre boligen
+            if (home.HostId != hostId)
+                throw new UnauthorizedAccessException("Du kan kun ændre dine egne boliger.");
+
+            // 3. Tjek at HomeType er gyldig
             if (!Enum.TryParse<HomeType>(request.HomeType, ignoreCase: true, out var homeType))
                 throw new ArgumentException($"Ugyldig boligtype: {request.HomeType}");
 
-            // 3. Lad domænet selv opdatere sig (og validere via Validate())
+
+
+            // 4. Opdater boligen med de nye detaljer
             home.UpdateDetails(
                 request.Capacity,
                 new Address(
@@ -35,16 +41,18 @@ namespace Airnb.Application.Usecases.Homes.UpdateHome
                     request.StreetName,
                     request.HouseNumber,
                     request.Floor),
-                request.CheckInTime,
-                request.CheckOutTime,
-                homeType,
-                new Money(request.PricePerDay, request.Currency),
-                new HomeRules(
+                    request.CheckInTime,
+                    request.CheckOutTime,
+                    homeType,
+                    new Money(
+                    request.PricePerDay, 
+                    request.Currency),
+                    new HomeRules(
                     request.PetsAllowed,
                     request.SmokingAllowed,
                     request.PartiesAllowed));
 
-            // 4. Gem
+            // 5. Gem
             await _homeRepository.SaveChangesAsync(cancellationToken);
         }
 

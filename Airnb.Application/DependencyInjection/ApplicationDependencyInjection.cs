@@ -6,6 +6,7 @@ using Airnb.Application.Usecases.Homes.DeleteHome;
 using Airnb.Application.Usecases.Homes.UpdateHome;
 using Airnb.Domain.DomainServices;
 using Microsoft.Extensions.DependencyInjection;
+using Airnb.Application.Usecases.Guests.UpdateGuest;
 
 
 namespace Airnb.Application.DependencyInjection
@@ -21,6 +22,8 @@ namespace Airnb.Application.DependencyInjection
             services.AddScoped<ICreateHomeUsecase, CreateHomeUsecase>();
             services.AddScoped<IUpdateHomeUsecase, UpdateHomeUsecase>();
             services.AddScoped<IDeleteHomeUsecase, DeleteHomeUsecase>();
+
+            services.AddScoped<IUpdateGuestUsecase, UpdateGuestUsecase>();
 
             services.AddScoped<IBookingConflictChecker, BookingConflictChecker>();
             return services;

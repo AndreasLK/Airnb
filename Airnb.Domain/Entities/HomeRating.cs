@@ -15,7 +15,7 @@ namespace Airnb.Domain.Entities
 
         public StarRating StarRating { get; private set; }
 
-        public HomeRating() { }
+        private HomeRating() { }
 
         public HomeRating(Guid bookingId, Guid guestId, Guid homeId, string review, StarRating starRating)
         {

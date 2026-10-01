@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Airnb.Shared\Airnb.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Usecases\Hosts\UpdateHost\" />
+  </ItemGroup>
+
 </Project>

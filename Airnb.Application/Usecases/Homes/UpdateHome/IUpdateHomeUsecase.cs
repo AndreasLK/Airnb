@@ -5,6 +5,6 @@ namespace Airnb.Application.Usecases.Homes.UpdateHome
 {
     public interface IUpdateHomeUsecase
     {
-        Task ExecuteAsync(Guid homeId, UpdateHomeRequest request, CancellationToken cancellationToken = default);
+        Task ExecuteAsync(Guid homeId, Guid hostId, UpdateHomeRequest request, CancellationToken cancellationToken = default);
     }
 }
