@@ -6,7 +6,7 @@ using Airnb.Shared.Hosts.DTO;
 
 namespace Airnb.Infrastructure.Queries.Hosts
 {
-    public class HostQueries
+    public class HostQueries : IHostQueries
     {
         private readonly AirnbDbContext _dbContext;
 
@@ -18,6 +18,7 @@ namespace Airnb.Infrastructure.Queries.Hosts
         public async Task<IReadOnlyList<HostDto>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await _dbContext.Hosts
+                .AsNoTracking()
                 .Select(h => new HostDto(h.Id, h.UserId))
                 .ToListAsync(cancellationToken);
         }
@@ -25,6 +26,7 @@ namespace Airnb.Infrastructure.Queries.Hosts
         public async Task<HostDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Hosts
+                .AsNoTracking()
                 .Where(h => h.Id == id)
                 .Select(h => new HostDto(h.Id, h.UserId))
                 .FirstOrDefaultAsync(cancellationToken);
@@ -33,6 +35,7 @@ namespace Airnb.Infrastructure.Queries.Hosts
         public async Task<HostDto?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Hosts
+                .AsNoTracking()
                 .Where(h => h.UserId == userId)
                 .Select(h => new HostDto(h.Id, h.UserId))
                 .FirstOrDefaultAsync(cancellationToken);

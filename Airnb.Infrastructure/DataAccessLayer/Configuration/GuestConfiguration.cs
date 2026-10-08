@@ -9,6 +9,11 @@ namespace Airnb.Infrastructure.DataAccessLayer.Configuration
         public void Configure(EntityTypeBuilder<GuestProfile> builder)
         {
             builder.OwnsOne(g => g.Address);
+
+            builder.HasOne<User>()
+            .WithOne()
+            .HasForeignKey<GuestProfile>(g => g.UserId)
+            .OnDelete(DeleteBehavior.Restrict);  // Prevents cascading delete when a User is deleted, preserving the GuestProfile.
         }
     }
 }

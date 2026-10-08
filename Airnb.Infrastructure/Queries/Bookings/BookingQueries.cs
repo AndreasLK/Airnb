@@ -20,7 +20,7 @@ namespace Airnb.Infrastructure.Queries.Bookings
                 .AsNoTracking()
                 .Select(b => new BookingDto(
                     b.Id,
-                    b.GuestId,
+                    b.GuestProfileId,
                     b.HomeId,
                     b.Status.ToString(),
                     b.TimeRange.Start,
@@ -37,7 +37,7 @@ namespace Airnb.Infrastructure.Queries.Bookings
                 .Where(b => b.Id == id)
                 .Select(b => new BookingDto(
                     b.Id,
-                    b.GuestId,
+                    b.GuestProfileId,
                     b.HomeId,
                     b.Status.ToString(),
                     b.TimeRange.Start,
@@ -54,7 +54,7 @@ namespace Airnb.Infrastructure.Queries.Bookings
                 .Where(b => b.HomeId == homeId)
                 .Select(b => new BookingDto(
                     b.Id,
-                    b.GuestId,
+                    b.GuestProfileId,
                     b.HomeId,
                     b.Status.ToString(),
                     b.TimeRange.Start,

@@ -3,6 +3,7 @@ using Airnb.Domain.DomainServices;
 using Airnb.Domain.Enums;
 using Airnb.Domain.ValueObjects;
 using Airnb.Shared.Bookings.Requests;
+using Airnb.Application.Exceptions;
 
 namespace Airnb.Application.Usecases.Bookings.UpdateBooking
 {
@@ -21,13 +22,13 @@ namespace Airnb.Application.Usecases.Bookings.UpdateBooking
         public async Task ExecuteAsync(Guid bookingId, UpdateBookingRequest request, CancellationToken cancellationToken = default)
         {
             var booking = await _bookingRepository.GetByIdAsync(bookingId, cancellationToken)
-                ?? throw new KeyNotFoundException("Booking not found");
+                ?? throw new NotFoundException("Booking not found");
 
             if (!Enum.TryParse<BookingStatus>(request.Status, ignoreCase: true, out var status))
-                throw new ArgumentException($"Ugyldig status: {request.Status}");
+                throw new ValidationException($"Ugyldig status: {request.Status}");
             
             var home = await _homeRepository.GetByIdAsync(booking.HomeId, cancellationToken)
-            ?? throw new KeyNotFoundException($"Hus med ID {booking.HomeId} blev ikke fundet.");
+            ?? throw new NotFoundException($"Hus med ID {booking.HomeId} blev ikke fundet.");
 
             var otherBookings = (await _bookingRepository.GetByHomeIdAsync(booking.HomeId, cancellationToken))
             .Where(b => b.Id != booking.Id)

@@ -1,6 +1,7 @@
 ﻿using Airnb.Application.Repository.Interfaces;
 using Airnb.Domain.ValueObjects;
 using Airnb.Shared.Guests.Request;
+using Airnb.Application.Exceptions;
 
 namespace Airnb.Application.Usecases.Guests.UpdateGuest
 {
@@ -17,7 +18,7 @@ namespace Airnb.Application.Usecases.Guests.UpdateGuest
         {
             // 1. Find guesten – findes den ikke, bliver det til 404 via GlobalExceptionHandler
             var guest = await _guestRepository.GetByIdAsync(guestId, cancellationToken)
-                ?? throw new KeyNotFoundException($"Guest med ID {guestId} blev ikke fundet.");
+                ?? throw new NotFoundException($"Guest med ID {guestId} blev ikke fundet.");
 
             // 2. Lad domænet selv opdatere sig
             guest.UpdateAddress(new Address(

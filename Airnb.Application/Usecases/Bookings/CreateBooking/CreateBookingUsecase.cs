@@ -5,6 +5,7 @@ using Airnb.Domain.Enums;
 using Airnb.Domain.ValueObjects;
 using Airnb.Shared.Bookings.DTO;
 using Airnb.Shared.Bookings.Requests;
+using Airnb.Application.Exceptions;
 
 namespace Airnb.Application.Usecases.Bookings.CreateBooking
 {
@@ -25,7 +26,7 @@ namespace Airnb.Application.Usecases.Bookings.CreateBooking
         public async Task<BookingDto> ExecuteAsync(CreateBookingRequest request, CancellationToken cancellationToken = default)
         {
             var home = await _homeRepository.GetByIdAsync(request.HomeId, cancellationToken)
-            ?? throw new KeyNotFoundException($"Hus med ID {request.HomeId} blev ikke fundet.");
+            ?? throw new NotFoundException($"Hus med ID {request.HomeId} blev ikke fundet.");
 
             var existingBookings = await _bookingRepository.GetByHomeIdAsync(request.HomeId, cancellationToken); //tjekker for eksisterende bookinger for det givne hjem, så vi kan tjekke for overlap.
 
@@ -48,7 +49,7 @@ namespace Airnb.Application.Usecases.Bookings.CreateBooking
 
             return new BookingDto(
                 booking.Id,
-                booking.GuestId,
+                booking.GuestProfileId,
                 booking.HomeId,
                 booking.Status.ToString(),
                 booking.TimeRange.Start,

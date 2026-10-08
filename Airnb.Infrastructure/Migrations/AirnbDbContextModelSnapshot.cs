@@ -31,7 +31,7 @@ namespace Airnb.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("GuestId")
+                    b.Property<Guid>("GuestProfileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("HomeId")
@@ -46,6 +46,10 @@ namespace Airnb.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GuestProfileId");
+
+                    b.HasIndex("HomeId");
+
                     b.ToTable("Bookings");
                 });
 
@@ -59,6 +63,9 @@ namespace Airnb.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Guests");
                 });
@@ -86,10 +93,12 @@ namespace Airnb.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("HostId")
+                    b.Property<Guid>("HostProfileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HostProfileId");
 
                     b.ToTable("Homes");
                 });
@@ -103,7 +112,7 @@ namespace Airnb.Infrastructure.Migrations
                     b.Property<Guid>("BookingId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GuestId")
+                    b.Property<Guid>("GuestProfileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("HomeId")
@@ -127,32 +136,52 @@ namespace Airnb.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PermissionsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Hosts");
                 });
 
-            modelBuilder.Entity("Airnb.Domain.Entities.Permission", b =>
+            modelBuilder.Entity("Airnb.Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("PermissionStatus")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions");
+                    b.HasIndex("TokenHash")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Airnb.Domain.Entities.User", b =>
@@ -161,11 +190,15 @@ namespace Airnb.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AuthenticationJWT")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -176,6 +209,18 @@ namespace Airnb.Infrastructure.Migrations
 
             modelBuilder.Entity("Airnb.Domain.Entities.Booking", b =>
                 {
+                    b.HasOne("Airnb.Domain.Entities.GuestProfile", null)
+                        .WithMany()
+                        .HasForeignKey("GuestProfileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Airnb.Domain.Entities.Home", null)
+                        .WithMany()
+                        .HasForeignKey("HomeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsOne("Airnb.Domain.ValueObjects.Reciept", "Reciept", b1 =>
                         {
                             b1.Property<Guid>("BookingId")
@@ -251,6 +296,12 @@ namespace Airnb.Infrastructure.Migrations
 
             modelBuilder.Entity("Airnb.Domain.Entities.GuestProfile", b =>
                 {
+                    b.HasOne("Airnb.Domain.Entities.User", null)
+                        .WithOne()
+                        .HasForeignKey("Airnb.Domain.Entities.GuestProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsOne("Airnb.Domain.ValueObjects.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("GuestProfileId")
@@ -293,6 +344,12 @@ namespace Airnb.Infrastructure.Migrations
 
             modelBuilder.Entity("Airnb.Domain.Entities.Home", b =>
                 {
+                    b.HasOne("Airnb.Domain.Entities.HostProfile", null)
+                        .WithMany()
+                        .HasForeignKey("HostProfileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsOne("Airnb.Domain.ValueObjects.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("HomeId")
@@ -408,6 +465,24 @@ namespace Airnb.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("PricePerDay")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Airnb.Domain.Entities.HostProfile", b =>
+                {
+                    b.HasOne("Airnb.Domain.Entities.User", null)
+                        .WithOne()
+                        .HasForeignKey("Airnb.Domain.Entities.HostProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Airnb.Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("Airnb.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

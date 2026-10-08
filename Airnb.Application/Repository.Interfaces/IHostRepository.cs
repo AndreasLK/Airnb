@@ -7,7 +7,7 @@ namespace Airnb.Application.Repository.Interfaces
 {
     public interface IHostRepository
     {
-        Task<HostProfile> GetByIdAsync(Guid hostId, CancellationToken cancellationToken = default);
+        Task<HostProfile?> GetByIdAsync(Guid hostId, CancellationToken cancellationToken = default);
         Task<bool> ExistsForUserAsync(Guid userId, CancellationToken cancellationToken = default);
         Task AddAsync(HostProfile host, CancellationToken cancellationToken = default);
         void Delete(HostProfile host);

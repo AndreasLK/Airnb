@@ -20,8 +20,9 @@ namespace Airnb.Infrastructure.DataAccessLayer.DbContexts
         public DbSet<HomeRating> HomeRatings => Set<HomeRating>();
         public DbSet<HostProfile> Hosts => Set<HostProfile>();
         public DbSet<User> Users => Set<User>();
-       
-        
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) //til konventioner og regler for hvordan entiteterne skal mappes til databasen.

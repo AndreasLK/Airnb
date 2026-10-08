@@ -1,5 +1,5 @@
 ﻿using Airnb.Application.Repository.Interfaces;
-using Airnb.Domain.Exceptions;
+using Airnb.Application.Exceptions;
 
 namespace Airnb.Application.Usecases.Homes.DeleteHome
 {
@@ -17,9 +17,9 @@ namespace Airnb.Application.Usecases.Homes.DeleteHome
         public async Task ExecuteAsync(Guid homeId, Guid hostId, CancellationToken cancellationToken = default)
         {
             var home = await _homeRepository.GetByIdAsync(homeId, cancellationToken)
-                ?? throw new KeyNotFoundException($"Hus med ID {homeId} blev ikke fundet.");
+                ?? throw new NotFoundException($"Hus med ID {homeId} blev ikke fundet.");
 
-            if (home.HostId != hostId)
+            if (home.HostProfileId != hostId)
                 throw new UnauthorizedAccessException("Du kan kun slette dine egne boliger.");  //sørger for at kun værten kan slette deres egne boliger
 
             if (await _bookingRepository.ExistsForHomeAsync(homeId, cancellationToken))

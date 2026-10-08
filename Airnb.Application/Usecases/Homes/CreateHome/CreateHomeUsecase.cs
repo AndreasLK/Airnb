@@ -4,9 +4,7 @@ using Airnb.Domain.Enums;
 using Airnb.Domain.ValueObjects;
 using Airnb.Shared.Homes.DTO;
 using Airnb.Shared.Homes.Requests;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Airnb.Application.Exceptions;
 
 namespace Airnb.Application.Usecases.Homes.CreateHome
 {
@@ -22,7 +20,7 @@ namespace Airnb.Application.Usecases.Homes.CreateHome
         {
             
             if (!Enum.TryParse<HomeType>(request.HomeType, ignoreCase: true, out var homeType))
-                throw new ArgumentException($"Ugyldig boligtype: {request.HomeType}");
+                throw new ValidationException($"Ugyldig boligtype: {request.HomeType}");
 
             var home = Home.Create(
                 request.HostId,
@@ -48,7 +46,7 @@ namespace Airnb.Application.Usecases.Homes.CreateHome
 
             return new HomeDto(
                 home.Id,
-                home.HostId,
+                home.HostProfileId,
                 home.Capacity,
                 home.Address.City,
                 home.HomeType.ToString(),

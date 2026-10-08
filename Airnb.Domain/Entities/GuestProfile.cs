@@ -9,7 +9,7 @@ namespace Airnb.Domain.Entities
 
         public Guid UserId { get; private set; }
 
-        public Address Address { get; private set; }
+        public Address Address { get; private set; } = null!;
 
         public GuestProfile(Guid userId, Address address)
         {

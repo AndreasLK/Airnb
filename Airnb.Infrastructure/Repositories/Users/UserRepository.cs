@@ -48,6 +48,22 @@ namespace Airnb.Infrastructure.Repositories.Users
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
+        /*public async Task<User?> ExistsByEmailAsync(string email, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+        }*/
+
+        public async Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken = default)
+        {
+            var normalized = email.Trim().ToLowerInvariant();
+            return await _dbContext.Users.AnyAsync(u => u.Email == normalized, cancellationToken);
+        }
+
+        public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+        {
+            var normalized = email.Trim().ToLowerInvariant();
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == normalized, cancellationToken);
+        }
 
     }
 }

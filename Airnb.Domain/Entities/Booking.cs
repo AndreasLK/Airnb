@@ -10,13 +10,13 @@ namespace Airnb.Domain.Entities
 {
     public class Booking : AggregateRoot
     {
-        public Guid GuestId { get; private set; }
+        public Guid GuestProfileId { get; private set; }
         public Guid HomeId { get; private set; }
         public BookingStatus Status { get; private set; }
-        public TimeRange TimeRange { get; private set; }
+        public TimeRange TimeRange { get; private set; } = null!;
         public DateTime CreatedTime { get; private set; }
         public int NumberOfGuests { get; private set; }
-        public Reciept Reciept { get; private set; }
+        public Reciept Reciept { get; private set; } = null!;
 
         private Booking() { } // EF Core needs this
 
@@ -28,7 +28,7 @@ namespace Airnb.Domain.Entities
             int numberOfGuests,
             Reciept reciept)
         {
-            this.GuestId = guestId;
+            this.GuestProfileId = guestId;
             this.HomeId = homeId;
             this.Status = status;
             this.TimeRange = timeRange;
@@ -54,7 +54,7 @@ namespace Airnb.Domain.Entities
         
         public void Validate()
         {
-            if (GuestId == Guid.Empty)
+            if (GuestProfileId == Guid.Empty)
                 throw new DomainException("GuestId cannot be empty.");
             if (HomeId == Guid.Empty)
                 throw new DomainException("HomeId cannot be empty.");

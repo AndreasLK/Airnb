@@ -20,7 +20,7 @@ namespace Airnb.Infrastructure.Queries.Homes
                 .AsNoTracking()
                 .Select(h => new HomeDto(
                     h.Id,
-                    h.HostId,
+                    h.HostProfileId,
                     h.Capacity,
                     h.Address.City,
                     h.HomeType.ToString(),
@@ -36,7 +36,7 @@ namespace Airnb.Infrastructure.Queries.Homes
                 .Where(h => h.Id == id)
                 .Select(h => new HomeDto(
                     h.Id,
-                    h.HostId,
+                    h.HostProfileId,
                     h.Capacity,
                     h.Address.City,
                     h.HomeType.ToString(),

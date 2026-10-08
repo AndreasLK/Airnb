@@ -41,6 +41,7 @@ namespace Airnb.API.Controllers
         [EndpointSummary("Henter en booking efter ID")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<BookingDto>> GetById(Guid id, CancellationToken ct)
         {
             var booking = await _queries.GetByIdAsync(id, ct);

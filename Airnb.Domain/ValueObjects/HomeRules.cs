@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Airnb.Domain.ValueObjects
 {
-    public class HomeRules
+    public record HomeRules
     {
         public bool PetsAllowed { get; private set; }
         public bool SmokingAllowed { get; private set; }

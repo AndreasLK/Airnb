@@ -28,6 +28,17 @@ namespace Airnb.Infrastructure.DataAccessLayer.Configuration
 
                 r.Property(x => x.Service).HasColumnName("Service").HasMaxLength(200);
             });
+
+            builder.HasOne<Home>()
+            .WithMany()         //har en booking en home, men en home kan have mange bookings
+            .HasForeignKey(b => b.HomeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne<GuestProfile>()
+            .WithMany()         //har en booking en guestprofile, men en guestprofile kan have mange bookings
+            .HasForeignKey(b => b.GuestProfileId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

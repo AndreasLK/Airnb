@@ -11,11 +11,9 @@ namespace Airnb.Domain.Entities
         private HostProfile() { }
 
         public Guid UserId { get; private set; }
-
-        public Guid HomeId { get; private set; }
         public HostRole Role { get; private set; }
 
-        public HostProfile(Guid userId, HostRole role)
+        private HostProfile(Guid userId, HostRole role)
         {
             UserId = userId;
             Role = role;

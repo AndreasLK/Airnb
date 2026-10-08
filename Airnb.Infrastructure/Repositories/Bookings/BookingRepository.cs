@@ -70,7 +70,7 @@ namespace Airnb.Infrastructure.Repositories.Bookings
             return await _context.Bookings.AnyAsync(b =>
                 blockingStatuses.Contains(b.Status)
                 && b.TimeRange.End > now
-                && _context.Homes.Any(h => h.Id == b.HomeId && h.HostId == hostId),
+                && _context.Homes.Any(h => h.Id == b.HomeId && h.HostProfileId == hostId),
                 cancellationToken);
         }
     }

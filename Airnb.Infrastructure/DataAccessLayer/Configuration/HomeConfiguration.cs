@@ -19,6 +19,11 @@ namespace Airnb.Infrastructure.DataAccessLayer.Configuration
                 m.Property(x => x.Amount).HasColumnName("PriceAmount").HasColumnType("decimal(18,2)");
                 m.Property(x => x.Currency).HasColumnName("PriceCurrency").HasMaxLength(3);
             });
+           
+            builder.HasOne<HostProfile>()
+            .WithMany()
+            .HasForeignKey(h => h.HostProfileId)
+            .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete to avoid deleting the host profile when a home is deleted
         }
     }
 }

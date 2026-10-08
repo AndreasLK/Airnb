@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Airnb.Domain.Exceptions;
 
 namespace Airnb.Domain.ValueObjects
 {
-    public class Address
+    public record Address
     {
         public string Country { get; private set; } = null!;
         public string PostalCode { get; private set; } = null!;
@@ -17,10 +15,10 @@ namespace Airnb.Domain.ValueObjects
 
         public Address(string country, string postalCode, string city, string streetName, string houseNumber, string? floor = null)
         {
-            if (string.IsNullOrWhiteSpace(country)) throw new ArgumentException("Land mangler.");
-            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentException("By mangler.");
-            if (string.IsNullOrWhiteSpace(streetName)) throw new ArgumentException("Gadenavn mangler.");
-            if (string.IsNullOrWhiteSpace(houseNumber)) throw new ArgumentException("Husnummer mangler.");
+            if (string.IsNullOrWhiteSpace(country)) throw new DomainException("Land mangler.");
+            if (string.IsNullOrWhiteSpace(city)) throw new DomainException("By mangler.");
+            if (string.IsNullOrWhiteSpace(streetName)) throw new DomainException("Gadenavn mangler.");
+            if (string.IsNullOrWhiteSpace(houseNumber)) throw new DomainException("Husnummer mangler.");
 
             Country = country;
             PostalCode = postalCode;

@@ -1,4 +1,6 @@
-﻿using Airnb.Domain.Exceptions;
+﻿using Airnb.Application.Exceptions;
+using Airnb.Application.Exceptions.Airnb.Application.Exceptions;
+using Airnb.Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.ConstrainedExecution;
@@ -22,9 +24,16 @@ public class GlobalExceptionHandler : IExceptionHandler
         {
             var (statusCode, title) = exception switch
             {
+                InvalidCredentialsException => (StatusCodes.Status401Unauthorized, "Ikke logget ind"),
+                InvalidOperationException => (StatusCodes.Status400BadRequest, "Ugyldig operation"),
+                UnauthorizedAccessException => (StatusCodes.Status403Forbidden, "Ingen adgang"),
                 KeyNotFoundException => (StatusCodes.Status404NotFound, "Ikke fundet"),
                 DomainException => (StatusCodes.Status400BadRequest, "Forretningsregelovertrådt"),
+                ConflictException => (StatusCodes.Status409Conflict, "Konflikt"),
                 ArgumentException => (StatusCodes.Status400BadRequest, "Ugyldigt input"),
+                NotFoundException => (StatusCodes.Status404NotFound, "Ikke fundet"),
+                ForbiddenException => (StatusCodes.Status403Forbidden, "Ingen adgang"),
+                ValidationException => (StatusCodes.Status400BadRequest, "Valideringsfejl"),
                 _ => (0, "")
             };
 

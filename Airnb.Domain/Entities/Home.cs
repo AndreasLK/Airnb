@@ -7,7 +7,7 @@ namespace Airnb.Domain.Entities
 {
         public class Home : AggregateRoot
         {
-            public Guid HostId { get; private set; }
+            public Guid HostProfileId { get; private set; }
             public int Capacity { get; private set; }
             public Address Address { get; private set; } = null!;
             public DateTime CheckInTime { get; private set; }
@@ -32,7 +32,7 @@ namespace Airnb.Domain.Entities
                 List<DateOnly> availableDates,
                 HomeFeatures? homeFeatures)
             {
-                HostId = hostId;
+                HostProfileId = hostId;
                 Capacity = capacity;
                 Address = address;
                 CheckInTime = checkInTime;
@@ -89,7 +89,7 @@ namespace Airnb.Domain.Entities
 
             private void Validate()
             {
-                if (HostId == Guid.Empty)
+                if (HostProfileId == Guid.Empty)
                     throw new DomainException("HostId cannot be empty.");
                 if (Capacity <= 0)
                     throw new DomainException("Capacity must be greater than zero.");

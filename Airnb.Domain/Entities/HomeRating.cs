@@ -7,11 +7,11 @@ namespace Airnb.Domain.Entities
     {
         public Guid BookingId { get; private set; }
 
-        public Guid GuestId { get; private set; }
+        public Guid GuestProfileId { get; private set; }
 
         public Guid HomeId { get; private set; }
 
-        public string Review { get; private set; }
+        public string Review { get; private set; } = null!;
 
         public StarRating StarRating { get; private set; }
 
@@ -20,7 +20,7 @@ namespace Airnb.Domain.Entities
         public HomeRating(Guid bookingId, Guid guestId, Guid homeId, string review, StarRating starRating)
         {
             BookingId = bookingId;
-            GuestId = guestId;
+            GuestProfileId = guestId;
             HomeId = homeId;
             Review = review;
             StarRating = starRating;
