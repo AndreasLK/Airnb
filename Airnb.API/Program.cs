@@ -2,6 +2,7 @@ using Airnb.API.ExceptionHandling;
 using Airnb.Application.DependencyInjection;
 using Airnb.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -61,7 +62,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)      
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()    //det her sætter vi op, at alle endpoints kræver authentication, medmindre det er specificeret andetsteds.
+                                                                 //Dette gør, at vi ikke skal sætte [Authorize] på alle controllerne.
+        .RequireAuthenticatedUser()
+        .Build();
+});
 
 var app = builder.Build();
 app.UseExceptionHandler();
@@ -69,7 +76,7 @@ app.UseExceptionHandler();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.MapOpenApi().AllowAnonymous(); //her sætter vi op, at OpenAPI-dokumentet kan tilgås uden authentication, så Swagger UI kan hente dokumentet.
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "v1"); //her sætter vi endpointet for Swagger UI, som vil blive brugt til at hente OpenAPI-dokumentet. Det skal matche det, vi satte i AddOpenApi.

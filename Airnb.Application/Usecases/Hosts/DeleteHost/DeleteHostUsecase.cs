@@ -1,5 +1,6 @@
-﻿using Airnb.Application.Repository.Interfaces;
-using Airnb.Application.Exceptions;
+﻿using Airnb.Application.Exceptions;
+using Airnb.Application.Exceptions.Airnb.Application.Exceptions;
+using Airnb.Application.Repository.Interfaces;
 
 namespace Airnb.Application.Usecases.Hosts.DeleteHost
 {

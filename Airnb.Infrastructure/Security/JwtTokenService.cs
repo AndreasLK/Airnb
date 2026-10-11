@@ -18,9 +18,9 @@ namespace Airnb.Infrastructure.Security
             _configuration = configuration;
         }
 
-        public (string Token, DateTime ExpiresAt) CreateAccessToken(User user)
+        public (string Token, DateTime ExpiresAt) CreateAccessToken(User user)     //has return type of a tuple containing the token and its expiration date, and takes a User object as a parameter
         {
-            var minutes = int.Parse(_configuration["Jwt:AccessTokenMinutes"] ?? "15");                  // Default to 15 minutes if not specified
+            var minutes = int.Parse(_configuration["Jwt:AccessTokenMinutes"] ?? "15");                  // gets the minutes output from configuration in appsettings.json Default to 15 minutes if not specified
             var expiresAt = DateTime.UtcNow.AddMinutes(minutes);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));     // Ensure the key is not null

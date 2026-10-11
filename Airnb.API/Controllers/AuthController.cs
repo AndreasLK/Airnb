@@ -5,7 +5,6 @@ using Airnb.Shared.Auth.DTO;
 using Airnb.Shared.Auth.Requests;
 using Airnb.Shared.Users.Requests;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airnb.API.Controllers
@@ -25,7 +24,7 @@ namespace Airnb.API.Controllers
             _refresh = refresh;
             _register = register;
         }
-
+        [AllowAnonymous]
         [HttpPost("register")]
         [EndpointSummary("Registrerer en ny bruger")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -36,7 +35,7 @@ namespace Airnb.API.Controllers
             var userId = await _register.ExecuteAsync(request, ct);
             return StatusCode(StatusCodes.Status201Created, new { userId });
         }
-
+        [AllowAnonymous]
         [HttpPost("login")]
         [EndpointSummary("Logger ind og returnerer et access token og et refresh token")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -46,7 +45,7 @@ namespace Airnb.API.Controllers
         {
             return Ok(await _login.ExecuteAsync(request, ct));
         }
-
+        [AllowAnonymous]
         [HttpPost("refresh")]
         [EndpointSummary("Bytter et refresh token til et nyt par tokens")]
         [ProducesResponseType(StatusCodes.Status200OK)]
